@@ -2,7 +2,15 @@ import 'package:app_notas/config/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeCard extends StatelessWidget {
-  const WelcomeCard({super.key});
+  final int completedCounter;
+  final int pendingCounter;
+  final int remindersCounter;
+
+  const WelcomeCard(
+      {super.key,
+      required this.completedCounter,
+      required this.pendingCounter,
+      required this.remindersCounter});
 
   @override
   Widget build(BuildContext context) {
@@ -30,40 +38,40 @@ class WelcomeCard extends StatelessWidget {
             'assets/images/image_card.png',
             width: 150,
           ),
-          const Positioned(
+          Positioned(
             left: 0,
             bottom: 0,
             child: Padding(
-              padding: EdgeInsets.only(bottom: 50, left: 20),
+              padding: const EdgeInsets.only(bottom: 50, left: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Hola Bruno 👋',
                     style: TextStyle(
                       fontSize: 28,
                     ),
                   ),
-                  Text(
+                  const Text(
                     'Tu día se ve así:',
                     style: TextStyle(
                       fontSize: 14,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   TaskCounterCard(
                     iconData: Icons.calendar_month_rounded,
-                    taskCounter: 20,
+                    taskCounter: pendingCounter,
                     typeTask: 'pendientes',
                   ),
                   TaskCounterCard(
                     iconData: Icons.calendar_month_rounded,
-                    taskCounter: 20,
+                    taskCounter: completedCounter,
                     typeTask: 'completados',
                   ),
                   TaskCounterCard(
                     iconData: Icons.calendar_month_rounded,
-                    taskCounter: 20,
+                    taskCounter: remindersCounter,
                     typeTask: 'recordatorios',
                   ),
                 ],
@@ -111,7 +119,7 @@ class TaskCounterCard extends StatelessWidget {
                 width: 5,
               ),
               Text(
-                '10 tasks $typeTask',
+                '$taskCounter tasks $typeTask',
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w500,

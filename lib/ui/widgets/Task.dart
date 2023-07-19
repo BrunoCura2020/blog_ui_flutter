@@ -1,26 +1,29 @@
-import 'package:app_notas/ui/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'widgets.dart';
 
 class Task extends StatelessWidget {
   final String id;
   final String description;
   final bool completed;
-  final void Function()? onTapCheckBox;
+  final void Function() onTapCheckBox;
   final void Function()? onTapDelete;
 
-  const Task(
-      {super.key,
-      required this.id,
-      required this.description,
-      required this.completed,
-      this.onTapCheckBox,
-      this.onTapDelete});
+  const Task({
+    super.key,
+    required this.description,
+    required this.id,
+    required this.completed,
+    this.onTapDelete,
+    required this.onTapCheckBox,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
       child: Container(
+        height: 70,
         decoration: BoxDecoration(
           boxShadow: const [
             BoxShadow(
@@ -43,6 +46,7 @@ class Task extends StatelessWidget {
                       ? Icons.check_box_rounded
                       : Icons.check_box_outline_blank_rounded,
                   color: Colors.blue,
+                  size: 23,
                 ),
                 color: Colors.blue.withOpacity(0.3),
                 onTap: onTapCheckBox,
@@ -52,7 +56,7 @@ class Task extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
                     description,
-                    style: TextStyle(
+                    style: GoogleFonts.roboto(
                       color: const Color(0xff6C6868),
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
@@ -70,7 +74,19 @@ class Task extends StatelessWidget {
                   size: 23,
                 ),
                 color: Colors.red.withOpacity(0.3),
-              )
+                // onTap: onTapDelete,
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return CustomDialogDeleteTodo(
+                        content: '¿Estas seguro de eliminar?',
+                        onPressedDelete: onTapDelete,
+                      );
+                    },
+                  );
+                },
+              ),
             ],
           ),
         ),
